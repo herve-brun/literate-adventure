@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('build') {
       steps {
-        ws(dir: 'ws')
+        tool 'maven 3.6.3'
       }
     }
 
