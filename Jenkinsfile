@@ -10,6 +10,7 @@ pipeline {
     stage('build') {
       steps {
         sh "mvn -B clean install"
+        jacoco()
       }
     }
   }
