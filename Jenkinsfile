@@ -4,7 +4,7 @@ pipeline {
     stage('Build') {
       steps {
         gitHubPRStatus githubPRMessage('${GITHUB_PR_COND_REF} build started')
-        githubPRAddLabels labelProperty: labels('jenkins')
+        githubPRAddLabels labelProperty: labels('jenkins'), statusVerifier: allowRunOnStatus('SUCCESS')
         sh 'mvn -B clean package -DskipTests'
       }
     }
@@ -34,9 +34,9 @@ pipeline {
     }
     stage('Finalisation') {
       steps {
-        gitHubPRStatus githubPRMessage('${GITHUB_PR_COND_REF} build started')
-        githubPRComment comment: githubPRMessage('Build ${BUILD_NUMBER} ${BUILD_STATUS}'), errorHandler: statusOnPublisherError('FAILURE')
-        githubPRStatusPublisher buildMessage: message(failureMsg: githubPRMessage('Can\'t set status; build failed.'), successMsg: githubPRMessage('Can\'t set status; build succeeded.')), statusMsg: githubPRMessage('${GITHUB_PR_COND_REF} run ended'), unstableAs: 'FAILURE'
+        gitHubPRStatus githubPRMessage('${GITHUB_PR_COND_REF} build ended')
+        githubPRComment comment: githubPRMessage('Build ${BUILD_NUMBER} ${BUILD_STATUS}'), errorHandler: statusOnPublisherError('FAILURE'), statusVerifier: allowRunOnStatus('SUCCESS')
+        githubPRStatusPublisher buildMessage: message(failureMsg: githubPRMessage('Can\'t set status; build failed.'), successMsg: githubPRMessage('Can\'t set status; build succeeded.')), statusMsg: githubPRMessage('${GITHUB_PR_COND_REF} run ended'), unstableAs: 'FAILURE', statusVerifier: allowRunOnStatus('SUCCESS')
       }
     }
   }
