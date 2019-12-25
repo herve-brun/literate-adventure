@@ -1,26 +1,19 @@
 pipeline {
   agent any
   stages {
-    stage('build') {
+    stage('Build') {
       steps {
         sh 'mvn -B clean package -DskipTests'
       }
     }
 
     stage('Test') {
-      post {
-        always {
-          junit 'target/surefire-reports/*.xml'
-          jacoco()
-        }
-
-      }
       steps {
         sh 'mvn test'
       }
     }
 
-    stage('JaCoCo') {
+    stage('Tests results') {
       parallel {
         stage('JaCoCo') {
           steps {
