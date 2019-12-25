@@ -14,12 +14,12 @@ pipeline {
     }
     stage('Test') { 
         steps {
-            sh 'mvn test' 
+            sh 'mvn test'
+            jacoco
         }
         post {
             always {
                 junit 'target/surefire-reports/*.xml' 
-                jacoco
             }
         }
     }
