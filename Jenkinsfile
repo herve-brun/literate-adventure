@@ -1,27 +1,44 @@
 pipeline {
-
-  tools {
-    maven "maven 3.6.3"
-  }
-
   agent any
-
   stages {
     stage('build') {
       steps {
-        sh "mvn -B clean package -DskipTests"
+        sh 'mvn -B clean package -DskipTests'
       }
     }
-    stage('Test') { 
-        steps {
-            sh 'mvn test'
+
+    stage('Test') {
+      post {
+        always {
+          junit 'target/surefire-reports/*.xml'
+          jacoco()
         }
-        post {
-            always {
-              junit 'target/surefire-reports/*.xml' 
-              jacoco()
-            }
-        }
+
+      }
+      steps {
+        sh 'mvn test'
+      }
     }
+
+    stage('JaCoCo') {
+      parallel {
+        stage('JaCoCo') {
+          steps {
+            jacoco()
+          }
+        }
+
+        stage('Junit') {
+          steps {
+            junit 'target/surefire-reports/*.xml'
+          }
+        }
+
+      }
+    }
+
+  }
+  tools {
+    maven 'maven 3.6.3'
   }
 }
