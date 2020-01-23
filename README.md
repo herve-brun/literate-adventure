@@ -1,3 +1,5 @@
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/herve-brun/literate-adventure) 
+
 # literate-adventure
 
 [![DepShield Badge](https://depshield.sonatype.org/badges/herve-brun/literate-adventure/depshield.svg)](https://depshield.github.io) [![GitHub issues](https://img.shields.io/github/issues/herve-brun/literate-adventure.svg)](https://GitHub.com/herve-brun/literate-adventure/issues/) [![GitHub license](https://img.shields.io/github/license/herve-brun/literate-adventure.svg)](https://github.com/herve-brun/literate-adventure/blob/master/LICENSE)
